@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signupValidation } from "@/lib/validation";
+import { Loader } from "lucide-react";
 
 const SignupForm = () => {
-  const isLoading = true;
+  const isLoading = false;
   const form = useForm<z.infer<typeof signupValidation>>({
     resolver: zodResolver(signupValidation),
     defaultValues: {
@@ -103,7 +104,7 @@ const SignupForm = () => {
           />
           <Button type="submit" className="shad-button_primary">
             {isLoading ? (
-              <div className="flex-center gap-2">Loading...</div>
+              <div className="flex-center gap-2"><Loader /> Loading...</div>
             ) : "Sign up"}
           </Button>
         </form>
