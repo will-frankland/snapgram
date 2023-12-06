@@ -95,16 +95,17 @@ export async function createPost(post: INewPost) {
   try {
     // Upload image to storage
     const uploadedFile = await uploadFile(post.file[0]);
+    
     if (!uploadFile) throw Error;
 
     const fileUrl = getFilePreview(uploadedFile.$id);
-    if(!fileUrl) {
-      deleteFile(uploadedFile.$id)
+    if (!fileUrl) {
+      deleteFile(uploadedFile.$id);
       throw Error;
     }
 
     // Convert tags into an array
-    const tags = post.tags?.replace(/ /g, "").split(',') || [];
+    const tags = post.tags?.replace(/ /g, "").split(",") || [];
 
     const newPost = await databases.createDocument(
       appwriteConfig.databaseId,
@@ -115,11 +116,11 @@ export async function createPost(post: INewPost) {
         caption: post.caption,
         imageUrl: fileUrl,
         imageId: uploadedFile?.$id,
-        tags: tags
+        tags: tags,
       }
-    )
+    );
 
-    if(!newPost) {
+    if (!newPost) {
       await deleteFile(uploadedFile.$id);
       throw Error;
     }
@@ -161,8 +162,19 @@ export async function getFilePreview(fileId: string) {
 export async function deleteFile(fileId: string) {
   try {
     await storage.deleteFile(appwriteConfig.storageId, fileId);
-    return { status: "Ok" }
+    return { status: "Ok" };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
+}
+
+export async function getRecentPosts() {
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    [Query.orderDesc('$createdAt'), Query.limit(20)]
+  )
+  if(!posts) throw Error;
+
+  return posts;
 }
