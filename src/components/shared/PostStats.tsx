@@ -1,9 +1,9 @@
-import { Models } from "appwrite"
+import { Models } from "appwrite";
 
 type PostStatsProps = {
-  post: Models.Document,
+  post: Models.Document;
   userId: string;
-}
+};
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
   return (
@@ -30,7 +30,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PostStats
+export default PostStats;
