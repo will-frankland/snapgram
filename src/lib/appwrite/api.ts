@@ -313,3 +313,18 @@ export async function updatePost(post: IUpdatePost) {
     console.log(error);
   }
 }
+
+export async function deletePost(postId: string, imageId: string) {
+  if(!postId || !imageId) throw Error;
+
+  try {
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId
+    )
+    return { status: 'Ok' }
+  } catch (error) {
+    console.log(error);
+  }
+}
