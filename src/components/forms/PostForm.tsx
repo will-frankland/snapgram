@@ -66,7 +66,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
       }
       return navigate(`/posts/${post.$id}`);
     }
-    
+
     const newPost = await createPost({
       ...values,
       userId: user.id,
@@ -160,8 +160,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
+            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            Submit
+            {isLoadingCreate || isLoadingUpdate && 'Loading...'}
+            {action} Post
           </Button>
         </div>
       </form>

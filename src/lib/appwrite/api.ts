@@ -158,6 +158,9 @@ export function getFilePreview(fileId: string) {
       "top",
       100
     );
+
+    if (!fileUrl) throw Error;
+
     return fileUrl;
   } catch (error) {
     console.log(error);
@@ -253,6 +256,7 @@ export async function getPostById(postId?: string) {
 
 export async function updatePost(post: IUpdatePost) {
   const hasFileToUpdate = post.file.length > 0;
+  console.log('post', post)
 
   try {
     let image = {
